@@ -1,4 +1,6 @@
 RedpeppixCropper::Application.routes.draw do
+  
+  match '/crop', :to => Cropper
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
