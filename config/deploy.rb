@@ -24,7 +24,7 @@ namespace :deploy do
     #run "ln -nfs #{shared_path}/config/exceptional.yml #{release_path}/config/exceptional.yml"
     #run "ln -nfs #{shared_path}/assets #{release_path}/public/assets"
     #run "ln -nfs #{shared_path}/credits #{release_path}/public/credits"
-    #run "ln -nfs #{shared_path}/invoices #{release_path}/public/invoices"
+    run "ln -nfs #{shared_path}/crops #{release_path}/tmp/crops"
     #run "ln -nfs #{shared_path}/logos #{release_path}/public/logos"
     #run "ln -nfs #{shared_path}/heatmaps #{release_path}/public/images/heatmaps"
   end
