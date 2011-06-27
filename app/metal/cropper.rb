@@ -33,7 +33,8 @@ class Cropper
         system(command)
 
         # put PIX-dot in center of the cropped image
-        command = "composite -gravity center http://www.redpeppix.de/images/dot.png #{tmp_path} #{final_path}"
+        command = "composite -gravity center #{Rails.root}/dot.png #{tmp_path} #{final_path}"
+        Rails.logger.info command
         system(command)
 
         # answer request with final image
