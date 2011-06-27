@@ -8,6 +8,7 @@ class Cropper
         request = Rack::Request.new(env)
         pix = Pix.find(request.params["id"].to_i) || raise(ActiveRecord::RecordNotFound)
 
+        img_path = "#{Rails.root}/tmp/crops/images/#{pix.image.id}#{File.extname(pix.image.image_path)}"
         tmp_path = "#{Rails.root}/tmp/crops/#{pix.id}.tmp.jpg"
         final_path = "#{Rails.root}/tmp/crops/#{pix.id}.jpg"
 
@@ -18,43 +19,23 @@ class Cropper
         coords.each_index do |x|
           x.even? ? x_coords << coords[x].to_i : y_coords << coords[x].to_i
         end
-      
+
         left   = (x_coords.sort.first-padding) < 0 ? 0 : x_coords.sort.first-padding
         top    = (y_coords.sort.first-padding) < 0 ? 0 : y_coords.sort.first-padding
         width  = x_coords.sort.last + padding - left
         height = y_coords.sort.last + padding - top
 
+        # load image and save it locally if it does not exist
+        system("curl -s -G #{pix.image.image_path} -o #{img_path}") unless File.exists?(img_path)
+
         # crop image using ImageMagick
         command = "convert #{pix.image.image_path} -crop #{width}x#{height}+#{left}+#{top}! #{tmp_path}"
         system(command)
 
-        if true
-          puts "########################################################"
-          puts "Pix-Id = #{request.params["id"]}"
-          puts "image-path = #{pix.image.image_path}"
-          puts "x_coords = #{x_coords.join(", ")}"
-          puts "y_coords = #{y_coords.join(", ")}"
-          puts
-          puts "top = #{top}"
-          puts "left = #{left}"
-          puts "right = #{x_coords.sort.last}"
-          puts "bottom = #{y_coords.sort.last}"
-          puts
-          puts "width = #{width}"
-          puts "height = #{height}"
-          puts
-          puts "command 1 = #{command}"
-        end
-      
         # put PIX-dot in center of the cropped image
         command = "composite -gravity center http://www.redpeppix.de/images/dot.png #{tmp_path} #{final_path}"
         system(command)
-      
-        if true
-          puts "command 2 = #{command}"
-          puts "########################################################"
-        end
-      
+
         # answer request with final image
         [200, {"Content-Type" => "image/jpg"}, IO.read(final_path)]
       else

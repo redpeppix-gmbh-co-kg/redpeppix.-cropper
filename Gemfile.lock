@@ -76,7 +76,6 @@ GEM
       thor (~> 0.14.4)
     rake (0.9.2)
     rdoc (3.6.1)
-    rmagick (2.13.1)
     thor (0.14.6)
     treetop (1.4.9)
       polyglot (>= 0.3.1)
@@ -89,4 +88,3 @@ DEPENDENCIES
   capistrano
   mysql2 (< 0.3)
   rails (= 3.0.9)
-  rmagick
