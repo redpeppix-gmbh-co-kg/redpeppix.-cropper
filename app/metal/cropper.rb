@@ -29,7 +29,7 @@ class Cropper
         system("curl -s -G #{pix.image.image_path} -o #{img_path}") unless File.exists?(img_path)
 
         # crop image using ImageMagick
-        command = "convert #{pix.image.image_path} -crop #{width}x#{height}+#{left}+#{top}! #{tmp_path}"
+        command = "convert #{img_path} -crop #{width}x#{height}+#{left}+#{top}! #{tmp_path}"
         system(command)
 
         # put PIX-dot in center of the cropped image
