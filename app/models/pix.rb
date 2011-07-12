@@ -10,7 +10,7 @@
 #
 class Pix < ActiveResource::Base
   if Rails.env.production?
-    self.site = "https://www.redpeppix.de"
+    self.site = "https://www.redpeppix.com"
   elsif Rails.env.staging?
     self.site = "https://www.com-pix.com"
   else
