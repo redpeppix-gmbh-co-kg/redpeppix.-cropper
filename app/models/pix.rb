@@ -16,5 +16,6 @@ class Pix < ActiveResource::Base
   else
     self.site = "http://localhost:3000"
   end
+  self.format = :json
   self.prefix = "/api/"
 end
