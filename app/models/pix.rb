@@ -14,7 +14,7 @@ class Pix < ActiveResource::Base
   elsif Rails.env.staging?
     self.site = "https://www.com-pix.com"
   else
-    self.site = "http://localhost:3000"
+    self.site = "http://redpeppix.dev"
   end
   self.format = :json
   self.prefix = "/api/"
