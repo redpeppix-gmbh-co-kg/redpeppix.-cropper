@@ -8,7 +8,7 @@ class Cropper
         request = Rack::Request.new(env)
         pix = Pix.find(request.params["id"].to_i) || raise(ActiveRecord::RecordNotFound)
 
-        img_path = "#{Rails.root}/tmp/crops/images/#{pix.image.id}#{File.extname(pix.image.image_path)}"
+        img_path = "#{Rails.root}/tmp/crops/images/img_#{pix.image.id}#{File.extname(pix.image.image_path)}"
         tmp_path = "#{Rails.root}/tmp/crops/#{pix.id}.tmp.jpg"
         final_path = "#{Rails.root}/tmp/crops/#{pix.id}.jpg"
 
@@ -25,9 +25,6 @@ class Cropper
         width  = x_coords.sort.last + padding - left
         height = y_coords.sort.last + padding - top
         
-        longest_side = [width, height].max
-        
-
         # load image and save it locally if it does not exist
         system("curl -s -G #{pix.image.image_path} -o #{img_path}") unless File.exists?(img_path)
 
