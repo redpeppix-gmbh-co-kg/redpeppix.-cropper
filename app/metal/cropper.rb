@@ -24,9 +24,10 @@ class Cropper
         top    = (y_coords.sort.first-padding) < 0 ? 0 : y_coords.sort.first-padding
         width  = x_coords.sort.last + padding - left
         height = y_coords.sort.last + padding - top
-        
+
         # load image and save it locally if it does not exist
-        system("curl -s -G #{pix.image.image_path} -o #{img_path}") unless File.exists?(img_path)
+        Rails.logger.info("curl -L -s -G #{pix.image.image_path} -o #{img_path}") unless File.exists?(img_path)
+        system("curl -L -s -G #{pix.image.image_path} -o #{img_path}") unless File.exists?(img_path)
 
         # crop image using ImageMagick
 
@@ -43,7 +44,8 @@ class Cropper
           # image is higher than wide, left crop marker must be lowered by half the sides difference
           command = "convert #{img_path} -crop #{height}x#{height}+#{left-((height-width)/2)}+#{top}! #{tmp_path}"
         end
-        
+
+        Rails.logger.info command
         system(command)
 
         # put PIX-dot in center of the cropped image
