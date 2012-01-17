@@ -11,7 +11,7 @@ class Cropper
         img_path = "#{Rails.root}/tmp/crops/images/img_#{pix.image.id}#{File.extname(pix.image.image_path)}"
         tmp_path = "#{Rails.root}/tmp/crops/#{pix.id}.tmp.jpg"
         final_path = "#{Rails.root}/tmp/crops/#{pix.id}.jpg"
-        debug = false
+        debug = request.params["debug"] == "true"
 
         coords = pix.coords.split(",")
         padding = 30
