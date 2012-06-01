@@ -49,7 +49,7 @@ class Cropper
         end
 
         # load image and save it locally if it does not exist
-        system("curl -L -s -G #{pix.image.image_path} -o #{img_path}") unless File.exists?(img_path)
+        system("curl -L -s -G \"#{pix.image.image_path}\" -o #{img_path}") unless File.exists?(img_path)
 
         # crop image using ImageMagick
 
