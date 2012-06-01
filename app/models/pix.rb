@@ -10,11 +10,11 @@
 #
 class Pix < ActiveResource::Base
   if Rails.env.production?
-    self.site = "https://www.redpeppix.com"
+    self.site = "https://www.pixoona.com"
   elsif Rails.env.staging?
     self.site = "https://www.com-pix.com"
   else
-    self.site = "http://redpeppix.dev"
+    self.site = "http://barbra-streisand.dev"
   end
   self.format = :json
   self.prefix = "/api/"
